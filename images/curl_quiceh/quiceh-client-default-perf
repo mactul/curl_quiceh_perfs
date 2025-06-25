@@ -1,0 +1,3 @@
+#!/bin/bash
+
+hotspot_perf /perf_record/quiceh_client_perf.data /quiceh/target/performance/quiceh-client https://quiceh-server.quiceh.org:4433/1G.bin --no-verify > /dev/null

@@ -1,0 +1,4 @@
+.vscode
+perf_record/*
+!perf_record/.gitkeep
+hotspot.AppImage

@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/curl/src/curl --http3-only -k https://quiceh-server.quiceh.org:4433/1G.bin --output /dev/null

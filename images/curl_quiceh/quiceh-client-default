@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/quiceh/target/performance/quiceh-client https://quiceh-server.quiceh.org:4433/1G.bin --no-verify > /dev/null
