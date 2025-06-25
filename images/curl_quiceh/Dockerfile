@@ -1,6 +1,6 @@
 FROM rust:latest
 
-RUN apt-get update && apt-get install -y build-essential cmake libpsl-dev linux-perf hotspot
+RUN apt-get update && apt-get install -y build-essential cmake libpsl-dev linux-perf
 RUN apt-get remove --purge -y curl
 
 
