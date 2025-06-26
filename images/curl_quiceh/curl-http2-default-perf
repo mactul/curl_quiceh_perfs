@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/curl/src/curl-perf /perf_record/curl_http2_perf.data -k https://nginx.quiceh.org/1G.bin --output /dev/null

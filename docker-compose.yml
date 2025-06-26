@@ -11,8 +11,16 @@ services:
       common_network:
         aliases:
           - quiceh-server.quiceh.org
-    ports:
-      - "0.0.0.0:4433:4433/udp"
+
+  nginx:
+    container_name: nginx
+    build:
+      context: images/curl_quiceh
+    command: "nginx -g 'daemon off;'"
+    networks:
+      common_network:
+        aliases:
+          - nginx.quiceh.org
 
   client:
     container_name: client

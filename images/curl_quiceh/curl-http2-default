@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/curl/src/curl -k https://nginx.quiceh.org/1G.bin --output /dev/null
