@@ -1,4 +1,4 @@
 .vscode
-perf_record/*
-!perf_record/.gitkeep
+perf_record
+common
 hotspot.AppImage

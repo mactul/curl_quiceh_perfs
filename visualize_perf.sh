@@ -2,7 +2,7 @@
 
 if [ $# -ne 1 ]
 then
-    >&2 printf "Usage $0 <perf_filepath>\n\nExample:\n\t$0 ./perf_record/curl_http3_perf.data\n\n"
+    >&2 printf "Usage $0 <perf_filepath>\n\nExample:\n\t$0 ./perf_record/quiche/curl_http3_perf.data\n\n"
     exit 1
 fi
 
@@ -22,7 +22,14 @@ else
     HOTSPOT_COMMAND="hotspot"
 fi
 
-CONTAINER_ROOT=$(docker inspect client | jq -r '.[0]."GraphDriver"."Data"."MergedDir"')
+if [[ $1 == *"quiceh"* ]]
+then
+    LIB_QUIC="quiceh"
+else
+    LIB_QUIC="quiche"
+fi
+
+CONTAINER_ROOT=$(docker inspect $LIB_QUIC-client | jq -r '.[0]."GraphDriver"."Data"."MergedDir"')
 
 if sudo [ ! -d $CONTAINER_ROOT ]
 then
@@ -32,4 +39,4 @@ fi
 
 CMDLINE=$(sudo perf report --header-only -i $1 | grep "cmdline :" | awk -F'-o ' '{ print $2 }' | cut -d ' ' -f 2)
 
-sudo $HOTSPOT_COMMAND --sysroot $CONTAINER_ROOT --kallsyms $CONTAINER_ROOT/tmp/kallsyms --appPath $CONTAINER_ROOT$CMDLINE --extraLibPaths $CONTAINER_ROOT/usr/lib:$CONTAINER_ROOT/quiceh/target/performance:$CONTAINER_ROOT/boringssl/lib $1
+sudo $HOTSPOT_COMMAND --sysroot $CONTAINER_ROOT --kallsyms $CONTAINER_ROOT/tmp/kallsyms --appPath $CONTAINER_ROOT$CMDLINE --extraLibPaths $CONTAINER_ROOT/usr/lib:$CONTAINER_ROOT/$LIB_QUIC/target/performance:$CONTAINER_ROOT/boringssl/lib $1

@@ -1,4 +1,16 @@
 services:
+  nginx:
+    container_name: nginx
+    build:
+      context: images/nginx
+    networks:
+      common_network:
+        aliases:
+          - nginx.benchmark.unamur
+    volumes:
+      - ./common/certs:/certs
+      - ./common/public:/public
+
   quiceh-server:
     container_name: quiceh-server
     build:
@@ -6,38 +18,60 @@ services:
     environment:
       - LD_LIBRARY_PATH=/boringssl/lib
       - RUST_LOG=info
-    command: "/quiceh/target/performance/quiceh-server --cert /certs/cert.crt --key /certs/cert.key --root /public --listen quiceh-server.quiceh.org:4433"
+    command: "/quiceh/target/performance/quiceh-server --cert /certs/cert.crt --key /certs/cert.key --root /public --listen quiceh-server.benchmark.unamur:4433"
     networks:
       common_network:
         aliases:
-          - quiceh-server.quiceh.org
+          - quiceh-server.benchmark.unamur
+    volumes:
+      - ./common/certs:/certs
+      - ./common/public:/public
 
-  nginx:
-    container_name: nginx
-    build:
-      context: images/curl_quiceh
-    command: "nginx -g 'daemon off;'"
-    networks:
-      common_network:
-        aliases:
-          - nginx.quiceh.org
-
-  client:
-    container_name: client
+  quiceh-client:
+    container_name: quiceh-client
     build:
       context: images/curl_quiceh
     environment:
       - LD_LIBRARY_PATH=/boringssl/lib:/quiceh/target/performance
       - RUST_LOG=info
-      - DISPLAY
     privileged: true
     tty: true
     networks:
       - common_network
     volumes:
-      - ./perf_record:/perf_record
-      - /tmp/.X11-unix:/tmp/.X11-unix
-      - /dev/dri:/dev/dri
+      - ./perf_record/quiceh:/perf_record
+
+  quiche-server:
+    container_name: quiche-server
+    build:
+      context: images/curl_quiche
+    environment:
+      - LD_LIBRARY_PATH=/boringssl/lib
+      - RUST_LOG=info
+      - RUST_BACKTRACE=1
+    command: "/quiche/target/performance/quiche-server --cert /certs/cert.crt --key /certs/cert.key --root /public --listen quiche-server.benchmark.unamur:4433"
+    networks:
+      common_network:
+        aliases:
+          - quiche-server.benchmark.unamur
+    volumes:
+      - ./common/certs:/certs
+      - ./common/public:/public
+
+  quiche-client:
+    container_name: quiche-client
+    build:
+      context: images/curl_quiche
+    environment:
+      - LD_LIBRARY_PATH=/boringssl/lib:/quiche/target/performance
+      - RUST_LOG=info
+      - DISPLA
+    privileged: true
+    tty: true
+    networks:
+      - common_network
+    volumes:
+      - ./perf_record/quiche:/perf_record
 
 networks:
   common_network: {}

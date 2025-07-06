@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/curl/src/curl-perf /perf_record/curl_http3_perf.data --http3-only -k https://quiche-server.benchmark.unamur:4433/1G.bin --output /dev/null
