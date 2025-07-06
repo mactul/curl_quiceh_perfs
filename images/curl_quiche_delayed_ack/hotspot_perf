@@ -1,0 +1,4 @@
+#!/bin/bash
+
+perf record -e cycles -e sched:sched_switch --switch-events --sample-cpu -m 8M --aio -z --call-graph dwarf -o ${@}
+cp /proc/kallsyms /tmp/kallsyms

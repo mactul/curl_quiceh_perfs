@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/quiche/target/performance/quiche-client https://quiche-server-delayed-ack.benchmark.unamur:4433/1G.bin --no-verify > /dev/null

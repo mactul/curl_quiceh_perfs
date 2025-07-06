@@ -1,3 +1,5 @@
+#!/bin/bash
+
 NO_CACHE=
 
 for i in $@

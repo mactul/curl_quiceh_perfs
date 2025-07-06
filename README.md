@@ -35,5 +35,5 @@ or
 To visualize graphically the flame graph with the number of cycles taken by each function.
 
 
-If you want to run a specific command on the client container, other than de default ones provided and still be able to visualize your datas with `./visualize_perf.sh`, you can use the hotspot_perf command in the client container.
+If you want to run a specific command on the client container, other than the default ones provided and still be able to visualize your datas with `./visualize_perf.sh`, you can use the hotspot_perf command in the client container.
 An exemple is shown in [quiceh-client-default-perf](./images/curl_quiceh/quiceh-client-default-perf).

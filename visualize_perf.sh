@@ -25,6 +25,9 @@ fi
 if [[ $1 == *"quiceh"* ]]
 then
     LIB_QUIC="quiceh"
+elif [[ $1 == *"delayed_ack"* ]]
+then
+    LIB_QUIC="quiche-delayed-ack"
 else
     LIB_QUIC="quiche"
 fi

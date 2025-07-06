@@ -65,13 +65,43 @@ services:
     environment:
       - LD_LIBRARY_PATH=/boringssl/lib:/quiche/target/performance
       - RUST_LOG=info
-      - DISPLA
     privileged: true
     tty: true
     networks:
       - common_network
     volumes:
       - ./perf_record/quiche:/perf_record
+
+  quiche-delayed-ack-server:
+    container_name: quiche-delayed-ack-server
+    build:
+      context: images/curl_quiche_delayed_ack
+    environment:
+      - LD_LIBRARY_PATH=/boringssl/lib
+      - RUST_LOG=info
+      - RUST_BACKTRACE=1
+    command: "/quiche/target/performance/quiche-server --cert /certs/cert.crt --key /certs/cert.key --root /public --listen quiche-server-delayed-ack.benchmark.unamur:4433"
+    networks:
+      common_network:
+        aliases:
+          - quiche-server-delayed-ack.benchmark.unamur
+    volumes:
+      - ./common/certs:/certs
+      - ./common/public:/public
+
+  quiche-delayed-ack-client:
+    container_name: quiche-delayed-ack-client
+    build:
+      context: images/curl_quiche_delayed_ack
+    environment:
+      - LD_LIBRARY_PATH=/boringssl/lib:/quiche/target/performance
+      - RUST_LOG=info
+    privileged: true
+    tty: true
+    networks:
+      - common_network
+    volumes:
+      - ./perf_record/quiche_delayed_ack:/perf_record
 
 networks:
   common_network: {}
