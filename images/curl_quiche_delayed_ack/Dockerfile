@@ -7,7 +7,7 @@ RUN cd /quiche \
     && QUICHE_BSSL_PATH=/boringssl QUICHE_BSSL_LINK_KIND=dylib cargo build --lib --bin quiche-server --bin quiche-client --features ffi,pkg-config-meta --profile=performance --examples
 
 
-RUN git clone --branch=quiche --progress https://github.com/mactul/curl.git /curl
+RUN git clone --branch=quiche_delayed_ack --progress https://github.com/mactul/curl.git /curl
 
 RUN cd /curl \
     && autoreconf -fi \
