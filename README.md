@@ -7,10 +7,12 @@ To do that, use, the `run_docker_compose.sh` script to ensure that every depend 
 ./run_docker_compose.sh
 ```
 
-If done for the first time, this operation will take a little more than 10 minutes
+If done for the first time, this operation will take a little more than 10 minutes.
 
-Once the docker-compose is up, quiceh-server, quiche-server and nginx are running.  
-You have 2 containers, quiceh-client and quiche-client that you can use for profiling quiceh and quiche.
+You can use `./run_docker_compose.sh --no-cache` to clone the latest version of quiche, quiceh and curl.
+
+Once the docker-compose is up, quiceh-server, quiche-server, quiche-delayed-ack-server and nginx are running.  
+You have 3 containers, quiceh-client, quiche-client and quiche-delayed-ack-client that you can use for profiling quiceh and quiche.
 
 For example, use:
 ```sh
